@@ -1,4 +1,6 @@
 #!/bin/bash
+
+echo "Updating vim dotfiles"
 mkdir -p $HOME/.vim
-cp coc-settings.json $HOME/.vim/coc-settings.json
-cp .vimrc $HOME
+cp $(pwd)/coc-settings.json $HOME/.vim/coc-settings.json
+cp $(pwd)/.vimrc $HOME/.vimrc

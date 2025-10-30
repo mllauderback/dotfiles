@@ -5,13 +5,13 @@
 # This script does install plugins or extensions
 
 # waybar
-source waybar/install.sh
+#(cd waybar sh install.sh)
 
 # hyprland
-source hyprland/install.sh
+#(cd hyprland sh install.sh)
 
 # tmux
-source tmux/install.sh
+(cd tmux; sh install.sh)
 
 # vim
-source vim/install.sh
+(cd vim; sh install.sh)
