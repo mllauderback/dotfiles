@@ -1,0 +1,165 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    /* border-bottom: 2px solid rgba(100, 114, 125, 0.5); */
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar>box {
+    margin: 8px 8px 0px 8px;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background: transparent;
+}
+
+#workspaces {
+    background-color: rgba(43, 48, 59, 0.5);
+    border-radius: 16px;
+}
+/* you can set a style on hover for any module like this */
+#workspaces button {
+    border-radius: 16px;
+    /* adjust padding to shift baseline down by 1px */
+    padding: 9px 10px 7px 10px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    background-color: #3D4B55;
+    transition: 0.2s;
+}
+
+#workspaces button.active {
+    background-color: #64727D;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#hardware {
+    border-radius: 16px;
+    background-color: rgba(43, 48, 59, 0.5);
+}
+
+#tray,
+#network,
+#battery,
+#pulseaudio,
+#idle_inhibitor,
+#power,
+#clock {
+    background-color: rgba(43, 48, 59, 0.5);
+    border-radius: 16px;
+    padding: 9px 16px 7px 16px;
+}
+
+#hardware:hover,
+#tray:hover,
+#network:hover,
+#battery:hover,
+#pulseaudio:hover,
+#idle_inhibitor:hover,
+#clock:hover,
+#custom-shutdown:hover,
+#custom-suspend:hover,
+#custom-reboot:hover,
+#custom-hibernate:hover {
+    background-color: #3D4B55;
+    transition: .2s;
+}
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+    color: #f53c3c;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#clock {
+    /* clock text baseline is aligned with other text so it appears higher. */
+    /* adjust padding to shift down by 2px */
+    padding: 10px 16px 6px 16px;
+    font-size: 16px;
+}
+#hardware > widget > * {
+    margin-right: 12px;
+    padding: 9px 0px 7px 0px;
+}
+
+#hardware > widget:last-child * {
+    margin-right: 0;
+    padding-right: 16px;
+}
+
+#hardware > widget:first-child * {
+    padding-left: 16px;
+}
+
+#hardware.activated {
+    background-color: #64727D;
+}
+
+/* power drawer styling */
+#power {
+    padding: 0;
+}
+#custom-suspend,
+#custom-reboot,
+#custom-hibernate,
+#custom-shutdown {
+    border-radius: 16px;
+    padding: 8px 16px;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+#idle_inhibitor.activated {
+    background-color: #64727D;
+}
