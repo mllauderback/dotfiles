@@ -15,3 +15,5 @@
 
 # vim
 (cd vim; sh install.sh)
+
+echo "Done."

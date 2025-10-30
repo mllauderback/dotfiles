@@ -3,6 +3,8 @@
 echo "Updating vim dotfiles"
 mkdir -p $HOME/.vim
 cp $(pwd)/.vimrc $HOME/.vimrc
+# automatically install vim plugins after updating .vimrc
+vim -c 'PlugInstall|q|q'
 
 # install coc extensions
 cocdir="$HOME/.config/coc"
@@ -11,3 +13,4 @@ if [[ -d $cocdir ]]; then
     cp $(pwd)/coc-settings.json $HOME/.vim/coc-settings.json
     cp $(pwd)/package.json $HOME/.config/coc/extensions/package.json
     vim -c 'CocUpdateSync|q'
+fi
