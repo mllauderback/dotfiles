@@ -149,7 +149,7 @@
     },
     "custom/swap": {
         "format": " {}%",
-        "exec": "echo $(free | grep Swap | awk '{print int($3*100/$2+0.5)}')",
+        "exec": "echo $(free | grep Swap | awk '{print int($3*100/($2+0.5))}')",
         "interval": 10,
         "on-click": "$HOME/.config/waybar/scripts/waybar_btop.sh",
         "tooltip": false

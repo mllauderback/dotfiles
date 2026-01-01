@@ -1,10 +1,5 @@
 #!/bin/bash
 
-#sync_hyprland
-#sync_waybar
-sync_tmux
-sync_vim
-
 sync_hyprland() {
     cp $HOME/.config/hypr/hyprland.conf $(pwd)/hyprland/hyprland.conf
     cp -r $HOME/.config/hypr/scripts $(pwd)/hyprland/scripts
@@ -28,3 +23,8 @@ sync_vim() {
     fi
     cp $HOME/.vimrc $(pwd)/vim/.vimrc
 }
+
+sync_hyprland
+sync_waybar
+#sync_tmux
+#sync_vim
