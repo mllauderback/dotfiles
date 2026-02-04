@@ -5,10 +5,10 @@
 # This script does install plugins or extensions
 
 # waybar
-#(cd waybar sh install.sh)
+(cd waybar sh install.sh)
 
 # hyprland
-#(cd hyprland sh install.sh)
+(cd hyprland sh install.sh)
 
 # tmux
 (cd tmux; sh install.sh)
