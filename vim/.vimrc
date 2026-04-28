@@ -35,6 +35,7 @@ set mouse=a
 
 " Highlight cursor position
 set ruler
+set cursorline
 
 " Show line numbers
 set number
@@ -130,7 +131,7 @@ fun! CleanTrailingWhitespace()
 endfun
 
 if has("autocmd")
-	autocmd BufWritePre *.txt,*.js,*.ts,*.py,*.java,*.wiki,*.sh,*.coffee,*.c,*.cpp :call CleanTrailingWhitespace()
+	autocmd BufWritePre *.txt,*.html,*.js,*.ts,*.py,*.java,*.wiki,*.sh,*.coffee,*.c,*.cs,*.cpp,*.s,*.S,*.asm :call CleanTrailingWhitespace()
 endif
 
 " Pressing ,ss will toggle spell checking
@@ -143,6 +144,9 @@ fun! Comment()
     " For Python files:
     if (&ft == 'py')
         let cstr = '#'
+    " For Assembly files:
+    elseif (&ft == 's' || &ft == 'S' || &ft == 'asm')
+        let cstr = ';'
     " For vim/vimrc files
     elseif (&ft == 'vimrc' || &ft == 'vim')
         let cstr = '"'
@@ -180,20 +184,27 @@ nnoremap <Tab> >gv
 
 " Auto-complete braces/brackets
 inoremap { {}<Esc>ha
+inoremap {} {}<Esc>ha
 inoremap {<CR> {<CR>}<Esc>ko
 inoremap ( ()<Esc>ha
+inoremap () ()<Esc>ha
 inoremap (<CR> (<CR>)<Esc>ko
 inoremap [ []<Esc>ha
+inoremap [] []<Esc>ha
 inoremap [<CR> [<CR>]<Esc>ko
-inoremap ' ''<Esc>ha
-inoremap " ""<Esc>ha
-inoremap ` ``<Esc>ha
+"inoremap ' ''<Esc>ha
+inoremap '' ''<Esc>ha
+
+inoremap "" ""<Esc>ha
+"inoremap ` ``<Esc>ha
+inoremap `` ``<Esc>ha
 
 call plug#begin()
 
 " List of plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -213,3 +224,14 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 set laststatus=2
 set noshowmode
 let g:lightline = { 'colorscheme': 'one' }
+
+" Settings for ALE
+let g:ale_linters = {
+            \ 'c': ['gcc'],
+            \ 'cpp': ['gcc'],
+            \ 'ts': ['eslint']
+            \}
+let g:ale_c_gcc_options = '-std=c11 -Wall'
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_sign_column_always = 1

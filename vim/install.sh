@@ -12,5 +12,6 @@ if [[ -d $cocdir ]]; then
     echo "Installing coc extensions"
     cp $(pwd)/coc-settings.json $HOME/.vim/coc-settings.json
     cp $(pwd)/package.json $HOME/.config/coc/extensions/package.json
-    vim -c 'CocUpdateSync|q'
+    vim -c "CocInstall $(cat $HOME/.config/coc/extensions/package.json | grep -E -o "coc-\w+" | tr '\n' ' ' > package_str)|q"
 fi
+
