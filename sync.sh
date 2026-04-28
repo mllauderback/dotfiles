@@ -16,11 +16,11 @@ sync_tmux() {
 }
 
 sync_vim() {
-#    cocdir="$HOME/.config/coc"
-#    if [[ -d $cocdir ]]; then
-#        cp $HOME/.config/coc/extensions/package.json $(pwd)/vim/package.json
-#        cp $HOME/.vim/coc-settings.json $(pwd)/vim/coc-settings.json
-#    fi
+    cocdir="$HOME/.config/coc"
+    if [[ -d $cocdir ]]; then
+        cp $HOME/.config/coc/extensions/package.json $(pwd)/vim/package.json
+        cp $HOME/.vim/coc-settings.json $(pwd)/vim/coc-settings.json
+    fi
     cp $HOME/.vimrc $(pwd)/vim/.vimrc
 }
 

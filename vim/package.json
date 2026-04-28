@@ -3,7 +3,6 @@
     "coc-json": ">=1.9.3",
     "coc-css": ">=2.1.0",
     "coc-html": ">=1.8.0",
-    "coc-clangd": ">=0.32.0",
     "coc-angular": ">=17.0.2",
     "coc-eslint": ">=3.0.15",
     "coc-java": ">=1.26.1",
