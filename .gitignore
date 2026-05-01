@@ -1,2 +1,15 @@
-# ignore .bak files
+# ignore .bak/.old files
 *.bak
+*.old
+
+# ignore tmux plugins folder - this is built locally from the .conf file
+tmux/plugins/
+
+# ignore dotvim plugged and autoload folders - these are build locally
+vim/dotvim/autoload/
+vim/dotvim/plugged/
+
+# ignore coc/memos.json, coc-json-data/ node_modules/ - built locally
+vim/coc/extensions/coc-json-data/
+vim/coc/extensions/node_modules/
+vim/coc/memos.json
