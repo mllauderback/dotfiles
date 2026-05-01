@@ -8,6 +8,7 @@ tmux/plugins/
 # ignore dotvim plugged and autoload folders - these are build locally
 vim/dotvim/autoload/
 vim/dotvim/plugged/
+vim/dotvim/.netrwhist
 
 # ignore coc/memos.json, coc-json-data/ node_modules/ - built locally
 vim/coc/extensions/coc-json-data/
