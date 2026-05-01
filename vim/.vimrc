@@ -37,6 +37,9 @@ set mouse=a
 set ruler
 set cursorline
 
+" Highlight column 80 for line-wrap suggestion
+set colorcolumn=80
+
 " Show line numbers
 set number
 
@@ -83,12 +86,6 @@ if !has('gui_running')
 	set t_Co=256
 endif
 
-" Set colorscheme
-try
-	colorscheme slate
-catch
-endtry
-
 set background=dark
 
 " Set UTF-8 encoding
@@ -121,6 +118,10 @@ set ai
 set si
 set wrap
 
+" Splits and buffer settings
+set splitright
+set splitbelow
+
 " Delete trailing whitespace on save
 fun! CleanTrailingWhitespace()
 	let save_cursor = getpos('.')
@@ -131,7 +132,12 @@ fun! CleanTrailingWhitespace()
 endfun
 
 if has("autocmd")
-	autocmd BufWritePre *.txt,*.html,*.js,*.ts,*.py,*.java,*.wiki,*.sh,*.coffee,*.c,*.cs,*.cpp,*.s,*.S,*.asm :call CleanTrailingWhitespace()
+	autocmd BufWritePre *.txt,
+                \ *.html,*.js,*.ts,*.coffee
+                \ *.py,*.java,*.cs
+                \ *.wiki,*.sh,
+                \ *.c,*.cpp,*.s,*.S,*.asm
+                \ :call CleanTrailingWhitespace()
 endif
 
 " Pressing ,ss will toggle spell checking
@@ -150,19 +156,36 @@ fun! Comment()
     " For vim/vimrc files
     elseif (&ft == 'vimrc' || &ft == 'vim')
         let cstr = '"'
-    " conf+ files, add special cases as needed
+    " For conf+ files
     elseif (&ft == 'sh' || &ft == 'conf' || &ft == 'hyprlang' || &ft == 'tmux')
+        let cstr = '#'
+    " For markdown
+    elseif (&ft == 'md')
         let cstr = '#'
     " Otherwise default comment is //
     else
         let cstr = '//'
     endif
 
-    let regex_str = '^' . cstr
-    if line =~ regex_str
-        exec 's!' . regex_str . '!!'
+    " Special case for html since html comments wrap the entire line
+    if (&ft == 'html')
+        let match_str = '^\s*<!--'
+        if line =~ match_str
+            call setline('.', substitute(line, '\v^\s*\zs(\<!--\s)|(\s--\>$)\ze', '', 'g'))
+            echo "uncomment"
+        else 
+            call setline('.', substitute(line, '\v^\s*\zs(.*$)\ze', '\<!-- \1 --\>', ''))
+            echo "comment"
+        endif
     else
-        exec 's!^!' . cstr . '!'
+        let regex_str = '^' . cstr
+        if line =~ regex_str
+            call setline('.', substitute(line, regex_str, '', ''))
+            echo "uncomment"
+        else
+            call setline('.', substitute(line, '^', cstr, ''))
+            echo "comment"
+        endif
     endif
 endfun
 
@@ -192,7 +215,7 @@ inoremap (<CR> (<CR>)<Esc>ko
 inoremap [ []<Esc>ha
 inoremap [] []<Esc>ha
 inoremap [<CR> [<CR>]<Esc>ko
-"inoremap ' ''<Esc>ha
+"inoremap< ' ''<Esc>ha
 inoremap '' ''<Esc>ha
 
 inoremap "" ""<Esc>ha
@@ -205,8 +228,25 @@ call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
 Plug 'dense-analysis/ale'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'morhetz/gruvbox'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
+
+" Settings for fzf.vim
+nnoremap <silent><C-p> :Files<CR>
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-h': 'split',
+  \ 'ctrl-v': 'vsplit' }   
+
+" Settings for gruvbox
+try
+	colorscheme gruvbox
+catch
+endtry
 
 " Settings for coc
 function! CheckBackspace() abort
@@ -223,7 +263,7 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " Settings for lightline
 set laststatus=2
 set noshowmode
-let g:lightline = { 'colorscheme': 'one' }
+let g:lightline = { 'colorscheme': 'wombat' }
 
 " Settings for ALE
 let g:ale_linters = {
