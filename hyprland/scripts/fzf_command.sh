@@ -25,7 +25,7 @@ BEGIN { n=split(dirs,d,":") }
     }
 }
 ' \
-    | fzf --color=bw --reverse --border --with-nth=2 --delimiter='\t' \
+    | fzf --reverse --border --with-nth=2 --delimiter='\t' \
     | cut -f1 \
     | sed 's/ %[uUfFdDnNickvm]//g' \
     | xargs $HOME/.config/hypr/scripts/lnch > /dev/null 2>&1
