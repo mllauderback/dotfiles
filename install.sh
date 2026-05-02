@@ -19,6 +19,8 @@ $vimrc=$HOME/.vimrc
 $tmux=$HOME/.config/tmux
 # waybar config folder
 $waybar=$HOME/.config/waybar
+# alacritty config folder
+$alacritty=$HOME/.config/alacritty
 
 # hyprland setup
 ln -s -b $(pwd)/hyprland $hyprland
@@ -37,3 +39,6 @@ git clone https://github.com/tmux-plugins/tpm $tmux/plugins/tpm
 
 # waybar setup
 ln -s -b $(pwd)/waybar $waybar
+
+# alacritty setup
+ln -s -b $(pwd)/alacritty $alacritty

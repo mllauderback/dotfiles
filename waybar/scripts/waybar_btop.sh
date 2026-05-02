@@ -6,7 +6,7 @@ x_gap=5
 y_gap=5
 waybar_h=45
 btop_w=800
-btop_h=500
+btop_h=540
 
 monitor_width() {
     local mon="${1:-0}"
@@ -47,13 +47,13 @@ fi
 # launch btop in a new floating terminal
 x=$(( mon_w - btop_w - x_gap ))
 y=$(( waybar_h + y_gap ))
-pid=$(pgrep -f "kitty sh -c btop waybar_btop")
+pid=$(pgrep -f "alacritty -T waybar_btop -e btop")
 if [[ -n $pid ]]; then
     kill $pid
     if (( $mon_num != $(existing_client_monitor_num $pid) )); then
         # start a new instance on the focused monitor if focused monitor and existing instance monitors are different
-        hyprctl dispatch exec "[float; size $btop_w $btop_h; move $x $y] kitty sh -c btop waybar_btop";
+        hyprctl dispatch exec "[float; size $btop_w $btop_h; move $x $y] alacritty -T waybar_btop -e btop";
     fi
 else
-    hyprctl dispatch exec "[float; size $btop_w $btop_h; move $x $y] kitty sh -c btop waybar_btop";
+    hyprctl dispatch exec "[float; size $btop_w $btop_h; move $x $y] alacritty -T waybar_btop -e btop";
 fi

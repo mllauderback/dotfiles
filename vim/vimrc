@@ -157,7 +157,7 @@ fun! Comment()
     elseif (&ft == 'vimrc' || &ft == 'vim')
         let cstr = '"'
     " For conf+ files
-    elseif (&ft == 'sh' || &ft == 'conf' || &ft == 'hyprlang' || &ft == 'tmux')
+    elseif (&ft == 'sh' || &ft == 'conf' || &ft == 'hyprlang' || &ft == 'tmux' || &ft == 'toml')
         let cstr = '#'
     " For markdown
     elseif (&ft == 'md')
