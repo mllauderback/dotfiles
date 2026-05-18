@@ -122,6 +122,9 @@ set wrap
 set splitright
 set splitbelow
 
+" use system clipboard
+set clipboard=unnamedplus
+
 " Delete trailing whitespace on save
 fun! CleanTrailingWhitespace()
 	let save_cursor = getpos('.')
@@ -159,6 +162,9 @@ fun! Comment()
     " For conf+ files
     elseif (&ft == 'sh' || &ft == 'conf' || &ft == 'hyprlang' || &ft == 'tmux' || &ft == 'toml')
         let cstr = '#'
+    " For lua
+    elseif (&ft == 'lua')
+        let cstr = '--'
     " For markdown
     elseif (&ft == 'md')
         let cstr = '#'
@@ -271,7 +277,7 @@ let g:ale_linters = {
             \ 'cpp': ['gcc'],
             \ 'ts': ['eslint']
             \}
-let g:ale_c_gcc_options = '-std=c11 -Wall'
+let g:ale_c_gcc_options = '-std=c23 -Wextra -Wall'
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 let g:ale_sign_column_always = 1

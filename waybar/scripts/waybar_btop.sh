@@ -52,8 +52,8 @@ if [[ -n $pid ]]; then
     kill $pid
     if (( $mon_num != $(existing_client_monitor_num $pid) )); then
         # start a new instance on the focused monitor if focused monitor and existing instance monitors are different
-        hyprctl dispatch exec "[float; size $btop_w $btop_h; move $x $y] alacritty -T waybar_btop -e btop";
+        hyprctl dispatch "hl.dsp.exec_cmd(\"alacritty -T waybar_btop -e btop\", { float = true, size = {$btop_w, $btop_h}, move = {$x, $y} })";
     fi
 else
-    hyprctl dispatch exec "[float; size $btop_w $btop_h; move $x $y] alacritty -T waybar_btop -e btop";
+    hyprctl dispatch "hl.dsp.exec_cmd(\"alacritty -T waybar_btop -e btop\", { float = true, size = {$btop_w, $btop_h}, move = {$x, $y} })";
 fi
