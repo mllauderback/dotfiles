@@ -125,7 +125,9 @@
     "clock": {
         // "timezone": "America/New_York",
         "format": "{:%H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "tooltip": false,
+//        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "on-click": "$HOME/.config/waybar/scripts/waybar_calendar.sh"
     },
     "cpu": {
         "format": " {usage}%",

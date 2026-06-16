@@ -1,12 +1,13 @@
-mouse_x=$(hyprctl cursorpos | awk -F ', ' '{print $1}')
+mouse_x=$(hyprctl cursorpos | awk -F ', ' '{print$1}')
 mouse_y=$(hyprctl cursorpos | awk -F ', ' '{print $2}')
 num_monitors=$(xrandr | grep -c connected)
 
-x_gap=5
 y_gap=5
 waybar_h=45
-btop_w=800
-btop_h=540
+calendar_w=550
+calendar_h=450
+
+app_path="$HOME/.config/waybar/scripts"
 
 monitor_width() {
     local mon="${1:-0}"
@@ -19,6 +20,10 @@ monitor_w_offset() {
 }
 
 # not particularly safe since we don't check that the input pid exists - this only gets called in a scope with a pid tho
+# existing_client_monitor_num() {
+#    hyprctl clients -j | jq -r --arg pid $1 '.[] | select(.pid == ($pid | tonumber)) | .monitor' | head -n 1
+#}
+
 existing_client_monitor_num() {
     hyprctl clients -j | jq -r --arg addr "$1" '.[] | select(.address == $addr) | .monitor' | head -n 1
 }
@@ -40,18 +45,20 @@ if (( $mon_num == -1 )); then
     exit 1 # exit with error code if monitor is still -1
 fi
 
-# launch btop in a new floating terminal
-x=$(( mon_w - btop_w - x_gap ))
+# launch calendar in a new floating terminal horizontally centered
+x=$(( (mon_w / 2) - (calendar_w / 2) ))
 y=$(( waybar_h + y_gap ))
-addr=$(hyprctl clients -j | jq -r '.[] | select(.class=="Alacritty" and .title=="waybar_btop") | .address')
-pid=$(hyprctl clients -j | jq -r --arg addr "$addr" '.[] | select(.address==$addr) | .pid')
-if [[ -n $pid && "$pid" != "null" ]]; then
+addr=$(hyprctl clients -j | jq -r '.[] | select(.class=="Alacritty" and .title=="waybar_calendar") | .address')
+pid=$(hyprctl clients -j | jq -r --arg addr "$addr" '.[] | select(.address == $addr) | .pid')
+#pid=$(pgrep -f "alacritty -T waybar_calendar -e $app_path/calendar")
+if [[ -n "$pid" && "$pid" != "null" ]]; then
     client_mon=$(existing_client_monitor_num "$addr")
+#    echo "$client_mon"
     kill $pid
     if [[ -n "$client_mon" && "mon_num" -ne "client_mon" ]]; then
         # start a new instance on the focused monitor if focused monitor and existing instance monitors are different
-        hyprctl dispatch "hl.dsp.exec_cmd(\"alacritty -T waybar_btop -e btop\", { float = true, size = {$btop_w, $btop_h}, move = {$x, $y} })";
+        hyprctl dispatch "hl.dsp.exec_cmd(\"alacritty -T waybar_calendar -e $app_path/calendar\", { float = true, size = {$calendar_w, $calendar_h}, move = {$x, $y} })";
     fi
 else
-    hyprctl dispatch "hl.dsp.exec_cmd(\"alacritty -T waybar_btop -e btop\", { float = true, size = {$btop_w, $btop_h}, move = {$x, $y} })";
+    hyprctl dispatch "hl.dsp.exec_cmd(\"alacritty -T waybar_calendar -e $app_path/calendar\", { float = true, size = {$calendar_w, $calendar_h}, move = {$x, $y} })";
 fi
