@@ -134,8 +134,8 @@ hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        gaps_in  = 3,
-        gaps_out = 8,
+        gaps_in  = 2,
+        gaps_out = 6,
 
         border_size = 1,
 
@@ -145,7 +145,7 @@ hl.config({
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
-        resize_on_border = false,
+        resize_on_border = true,
 
         -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
         allow_tearing = false,
@@ -159,7 +159,7 @@ hl.config({
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 0.85,
-        inactive_opacity = 0.85,
+        inactive_opacity = 0.80,
 
         shadow = {
             enabled      = false,
@@ -173,7 +173,7 @@ hl.config({
             size      = 10,
             passes    = 3,
             new_optimizations = true,
-            --vibrancy  = 0.1696,
+            vibrancy  = 0.1696,
         },
     },
 
@@ -404,7 +404,8 @@ end
 
 -- Screenshot
 --hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("if area=$(slurp); then grim -g \"$area\" - | tee >(wl-copy) > $HOME/Pictures/Screenshots/Screenshot-$(date +%F_%T.png && dunstify \"Screenshot of the region taken\" -t 1000; fi)"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("if area=$(slurp); then grim -g \"$(slurp)\" - | tee $HOME/Pictures/screenshot-$(date +%F_%T).png && dunstify \"Screenshot of the region taken\" -t 1000 | wl-copy; fi"))
+--hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("if area=$(slurp); then grim -g \"$(slurp)\" - | tee $HOME/Pictures/screenshot-$(date +%F_%T).png && dunstify \"Screenshot of the region taken\" -t 1000 | wl-copy; fi"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("grim -g \"$(slurp)\" -t png - | wl-copy -t image/png"))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
